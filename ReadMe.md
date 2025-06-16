@@ -53,3 +53,49 @@ django-admin startproject drf_project1 backend
 ```
 copy env.template .env
 ```
+7. Create first Django app, name it ```core```
+> Note: Change directory into the ```backend``` folder where the ```drf_project1``` lives and run the command
+```
+python manage.py startapp core
+```
+The root directory should look like:
+```
+django-rest-framework-projects\
+    backend\
+        core\
+        drf_project1\
+        manage.py
+        requirements.txt   
+    django-venv\
+    .env
+    env.template
+    ReadMe.md 
+```
+8. Make some changes in the django settings file
+
+```
+# Imports: replace the imports with all of these
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+# Variables: Replace ALLOWED_HOSTS, SECRET_KEY and DEBUG with the following snippet.
+SECRET_KEY = os.environ.get("SECRET_KEY")
+DEBUG = int(os.environ.get("DEBUG", default=0))
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+
+# Installed apps: Django will include our new app in the project when we register it. Replace the current settings with the following snippet.
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django_extensions', #Great packaged to access abstract models
+    'django_filters', #Used with DRF
+    'rest_framework', #DRF package
+    'core', # New app
+]
+```
